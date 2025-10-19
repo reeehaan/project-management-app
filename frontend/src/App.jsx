@@ -1,10 +1,35 @@
+import { useState } from 'react';
+
+import NewProject from './components/NewProject.jsx';
+import NoProjectSelected from './components/NoProjectSelected.jsx';
 import ProjectSidebar from './components/ProjectSidebar.jsx';
 
 function App() {
-  return (
-    <main className='h-screen my-8'>
-      <ProjectSidebar/>
+  const [projectState, setProjectState] = useState({
+    selectedProjectId : undefined,
+    projects: []
+  });
 
+  function handleStartAddProject(){
+    setProjectState(prevState =>{
+      return{
+        ...prevState,
+        selectedProjectId: null
+      }
+    });
+  }
+
+  let content;
+
+  if(projectState.selectedProjectId === null){
+    content = <NewProject/>
+  }else if(projectState.selectedProjectId === undefined){
+    content = <NoProjectSelected onStartAddProject={handleStartAddProject}/>
+  }
+  return (
+    <main className='h-screen my-8 flex gap-08'>
+      <ProjectSidebar onStartAddProject={handleStartAddProject}/>
+      {content}
     </main>
   );
 }
