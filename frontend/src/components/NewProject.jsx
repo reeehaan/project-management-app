@@ -1,7 +1,7 @@
 import Input from "./Input";
 import {useRef} from "react";
 
-export default function NewProject(){
+export default function NewProject({onAdd}){
     const title = useRef();
     const description = useRef();
     const dueDate = useRef();
@@ -10,6 +10,12 @@ export default function NewProject(){
         const enteredTitle = title.current.value;
         const enteredDescription = description.current.value;
         const enteredDueDate = dueDate.current.value;
+
+        onAdd({
+            title : enteredTitle,
+            description : enteredDescription,
+            dueDate : enteredDueDate
+        })
     }
     return(
         <div className="w-[35rem] mt-16 px-8">
@@ -29,8 +35,9 @@ export default function NewProject(){
                 textarea
                 label="Description"
                 />
-                ref={dueDate}
                 <Input
+                type="date"
+                ref={dueDate}
                 label="Due Date"
                 />
             </div>
